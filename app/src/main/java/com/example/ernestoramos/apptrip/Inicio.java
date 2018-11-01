@@ -26,9 +26,10 @@ import android.widget.Toast;
 import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
+import com.example.ernestoramos.apptrip.Mapas.ubicacion;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
-public class Inicio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Inicio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
     //Manejo de sesiones
@@ -104,6 +105,16 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         lblNombre.setText(_SESION.getNombre());
         lblCorreo.setText(_SESION.getCorreo());
         //Fin onCreate
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.LinearFav:
+                    Intent intent=new Intent(getApplicationContext(), ubicacion.class);
+                    startActivity(intent);
+                break;
+        }
     }
 
     class MyViewPager extends FragmentPagerAdapter {
