@@ -26,13 +26,13 @@ import android.widget.Toast;
 import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
-import com.example.ernestoramos.apptrip.Mapas.ubicacion;
+import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
 public class Inicio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
-    private SharedPreferences preferencias;
-    String SPNombre, SPCorreo;
+    //Manejo de sesiones
+    Sesion _SESION=Sesion.getInstance();
     private MenuItem prevMenuItem;
     TextView lblCorreo, lblNombre;
     @Override
@@ -96,16 +96,13 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
 
         pager.setAdapter(new MyViewPager(getSupportFragmentManager()));
         ///Inicializamos las variables
-        preferencias = getSharedPreferences("preferencias", MODE_PRIVATE);
-        SPNombre=preferencias.getString("nombre", "");
-        SPCorreo=preferencias.getString("correo", "");
         View hView =  navigationView.getHeaderView(0);
         lblCorreo=(TextView) hView.findViewById(R.id.lblICorreo);
         lblNombre=(TextView) hView.findViewById(R.id.lblINombre);
 
         //Asignamos variables
-        lblNombre.setText(SPNombre);
-        lblCorreo.setText(SPCorreo);
+        lblNombre.setText(_SESION.getNombre());
+        lblCorreo.setText(_SESION.getCorreo());
         //Fin onCreate
     }
 
@@ -155,8 +152,7 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         int id = item.getItemId();
 
         if (id == R.id.nav_about) {
-Intent intent = new Intent(this, ubicacion.class);
-startActivity(intent);
+
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_tools) {

@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText txtUsuario;
     @NotEmpty(messageId = R.string.contraseña,order=2)
     EditText txtClave;
-
+    //Manejo de sesiones
+    Sesion _SESION=Sesion.getInstance();
     //Declaracion de variables a utilizar
     RequestQueue requestQueue;
     JsonObjectRequest jsonObjectRequest;
@@ -86,9 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void existePreferencia() {
         String email= getEmail();
-        String nombre= getNombre();
 
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(nombre)){
+        if(!TextUtils.isEmpty(email)){
             txtUsuario.setText(email);
             txtClave.setText("");
         }
@@ -96,11 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-
-    private String getNombre() {
-      return  preferencias.getString("nombre", "");
-    }
-
     private String getEmail() {
         return  preferencias.getString("correo", "");
     }
@@ -131,10 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void GuardarDatosShared(String email, String nombre){
+    private void GuardarDatosShared(String correo){
         SharedPreferences.Editor editor= preferencias.edit();
-        editor.putString("correo",email);
-        editor.putString("nombre",nombre);
+        editor.putString("correo",correo);
         //Guarda los valores en segundo plano
         editor.apply();
     }
@@ -155,9 +150,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
                 Intent act = new Intent(this, Inicio.class);
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                String nombre = jsonObject.getString("nombre");
-                String correo = jsonObject.getString("email");
-                GuardarDatosShared(correo, nombre);
+                _SESION.setNombre(jsonObject.getString("nombre"));
+                _SESION.setCorreo(jsonObject.getString("email"));
+                _SESION.setId(jsonObject.getString("id"));
+                GuardarDatosShared(_SESION.getCorreo());
                 startActivity(act);
                 finish();
 
