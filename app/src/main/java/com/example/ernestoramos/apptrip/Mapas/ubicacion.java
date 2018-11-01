@@ -9,11 +9,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ubicacion extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Marker marker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,20 @@ public class ubicacion extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,GoogleMap.MAP_TYPE_SATELLITE));
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng sonsonate = new LatLng(13.7271697, -89.6652389);
+        mMap.addMarker(new MarkerOptions().position(sonsonate).title("Universidad de Sonsonate"));
+
+        LatLng prueba = new LatLng(13.7350808, -89.712655);
+        marker=googleMap.addMarker(new MarkerOptions().position(prueba).title("Prueba"));
+
+        mMap.addMarker(new MarkerOptions().position(prueba).title("prueba"));
+        float zoom=10;
+
+
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sonsonate,zoom));
     }
 }

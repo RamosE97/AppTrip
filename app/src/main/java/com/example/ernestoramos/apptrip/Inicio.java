@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
+import com.example.ernestoramos.apptrip.Mapas.ubicacion;
 
 public class Inicio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
@@ -154,7 +155,8 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         int id = item.getItemId();
 
         if (id == R.id.nav_about) {
-
+Intent intent = new Intent(this, ubicacion.class);
+startActivity(intent);
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_tools) {
