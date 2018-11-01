@@ -21,4 +21,5 @@
     <string name="IngresePass">Ingrese una contraseña</string>
     <string name="IngreseConfirmPass">Confirmar contraseña</string>
     <string name="PassNoCoinciden">Las contraseñas no coinciden</string>
+    <string name="title_activity_ubicacion">Map</string>
 </resources>
