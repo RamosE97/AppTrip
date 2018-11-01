@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
@@ -30,13 +31,14 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
     private SharedPreferences preferencias;
+    String SPNombre, SPCorreo;
     private MenuItem prevMenuItem;
+    TextView lblCorreo, lblNombre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
-        preferencias = getSharedPreferences("preferencias", MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,8 +92,22 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
                 return true;
             }
         });
+
         pager.setAdapter(new MyViewPager(getSupportFragmentManager()));
+        ///Inicializamos las variables
+        preferencias = getSharedPreferences("preferencias", MODE_PRIVATE);
+        SPNombre=preferencias.getString("nombre", "");
+        SPCorreo=preferencias.getString("correo", "");
+        View hView =  navigationView.getHeaderView(0);
+        lblCorreo=(TextView) hView.findViewById(R.id.lblICorreo);
+        lblNombre=(TextView) hView.findViewById(R.id.lblINombre);
+
+        //Asignamos variables
+        lblNombre.setText(SPNombre);
+        lblCorreo.setText(SPCorreo);
+        //Fin onCreate
     }
+
     class MyViewPager extends FragmentPagerAdapter {
         public MyViewPager(FragmentManager fm) {
             super(fm);
@@ -129,34 +145,7 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.inicio, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//VERIFICAMOS LAS OPCIONES DEL MENU
-        switch (id){
-            case R.id.action_settings:
-               return true;
-            case R.id.salir:
-                logOut();
-                return true;
-
-                default:
-                    return super.onOptionsItemSelected(item);
-                    //FIN DEL SWITCH
-        }
-        }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -164,17 +153,11 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_about) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_help) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.Cerrar_sesion) {
                 logOut();
