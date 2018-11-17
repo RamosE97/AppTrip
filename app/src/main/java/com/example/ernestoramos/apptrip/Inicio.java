@@ -25,33 +25,26 @@ import android.widget.Toast;
 
 import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
+import com.example.ernestoramos.apptrip.Fragmentos.PerfilFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
 import com.example.ernestoramos.apptrip.Mapas.ubicacion;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
-public class Inicio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class Inicio extends AppCompatActivity implements  View.OnClickListener {
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
     //Manejo de sesiones
-    Sesion _SESION=Sesion.getInstance();
+
     private MenuItem prevMenuItem;
-    TextView lblCorreo, lblNombre;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().hide();
+        }
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         pager = findViewById(R.id.fragment_container);
@@ -89,6 +82,9 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
                     case R.id.Restaurante:
                         opc = 2;
                         break;
+                    case R.id.Perfil:
+                        opc = 3;
+                        break;
                 }
                 pager.setCurrentItem(opc);
                 return true;
@@ -96,15 +92,7 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
         });
 
         pager.setAdapter(new MyViewPager(getSupportFragmentManager()));
-        ///Inicializamos las variables
-        View hView =  navigationView.getHeaderView(0);
-        lblCorreo=(TextView) hView.findViewById(R.id.lblICorreo);
-        lblNombre=(TextView) hView.findViewById(R.id.lblINombre);
 
-        //Asignamos variables
-        lblNombre.setText(_SESION.getNombre());
-        lblCorreo.setText(_SESION.getCorreo());
-        //Fin onCreate
     }
 
     @Override
@@ -134,6 +122,8 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
                 case 2: // Fragment # 1 - This will show SecondFragment
 
                     return new RestaurantesFragment();
+                case 3:
+                    return new PerfilFragment();
                 default:
                     return null;
             }
@@ -141,45 +131,8 @@ public class Inicio extends AppCompatActivity implements NavigationView.OnNaviga
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
-    }
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_about) {
-
-        } else if (id == R.id.nav_help) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.Cerrar_sesion) {
-                logOut();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    private void logOut(){
-        Intent inten= new Intent(Inicio.this,MainActivity.class);
-        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(inten);
     }
 
 }

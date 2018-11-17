@@ -4,4 +4,5 @@
     <color name="colorPrimary">#00a680</color>
     <color name="colorPrimaryDark">#078172</color>
     <color name="label">#eeeeee</color>
+    <color name="White">#ffffff</color>
 </resources>

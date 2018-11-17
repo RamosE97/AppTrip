@@ -16,7 +16,11 @@ public  class Sesion {
             return(INSTANCE);
         }
 
-
+   public void CerrarSesion(){
+           this.Id="";
+           this.Nombre="";
+           this.correo="";
+   }
     public String getId() {
         return Id;
     }
