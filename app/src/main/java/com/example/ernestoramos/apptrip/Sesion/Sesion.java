@@ -1,5 +1,11 @@
 package com.example.ernestoramos.apptrip.Sesion;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.io.ByteArrayInputStream;
+
 public  class Sesion {
     private static Sesion INSTANCE = null;
 
@@ -7,6 +13,7 @@ public  class Sesion {
         private String Id;
         private String Nombre;
         private String correo;
+        private Bitmap foto;
         private Sesion() {};
 
         public static Sesion getInstance() {
@@ -20,6 +27,7 @@ public  class Sesion {
            this.Id="";
            this.Nombre="";
            this.correo="";
+           this.foto=null;
    }
     public String getId() {
         return Id;
@@ -45,4 +53,10 @@ public  class Sesion {
         this.correo = correo;
     }
 
+    public void setFoto(Bitmap data) {
+       this.foto=data;
+    }
+    public Bitmap getFoto() {
+        return foto;
+    }
 }

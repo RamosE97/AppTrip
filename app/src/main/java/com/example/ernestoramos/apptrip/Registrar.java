@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 
 import org.json.JSONObject;
 
@@ -28,6 +32,7 @@ import eu.inmite.android.lib.validations.form.annotations.RegExp;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
 
 import static eu.inmite.android.lib.validations.form.annotations.RegExp.EMAIL;
+
 
 public class Registrar extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener, View.OnFocusChangeListener {
     //Variables a utilizar
@@ -86,7 +91,7 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
         progeso.setMessage("Enviando datos al servidor");
         progeso.show();
 
-        String url="http://tidesignsolutions.com/esperanzayvida/Modelos/registrar.php?nombre="+txtNombre.getText().toString()+"&email="+txtEmail.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
+        String url="https://sonsotrip.webcindario.com/Modelos/registrar.php?nombre="+txtNombre.getText().toString()+"&email="+txtEmail.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);
@@ -109,14 +114,14 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lblIniciar:
-                    Intent act = new Intent(Registrar.this, MainActivity.class);
-                    startActivity(act);
-                    finish();
+                Intent act = new Intent(Registrar.this, MainActivity.class);
+                startActivity(act);
+                finish();
                 break;
             case R.id.btnIngresar:
                 if(FormValidator.validate(this,new SimpleErrorPopupCallback(this))){
                     if(txtClave.getText().toString().equals(txtConfirmarClave.getText().toString())) {
-                    LlamarWebServices();
+                        LlamarWebServices();
                     }else{
                         lblMensaje.setText(R.string.PassNoCoinciden);
                     }
@@ -144,7 +149,7 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
                     }
                 }
             }
-                break;
+            break;
             case R.id.txtConfirmarClave:{
                 String vtext = txtConfirmarClave.getText().toString();
                 if (b) {

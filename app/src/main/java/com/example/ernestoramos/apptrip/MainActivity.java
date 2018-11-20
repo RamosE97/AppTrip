@@ -5,10 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +28,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import eu.inmite.android.lib.validations.form.FormValidator;
 import eu.inmite.android.lib.validations.form.Utils;
@@ -43,12 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText txtUsuario;
     @NotEmpty(messageId = R.string.contraseña,order=2)
     EditText txtClave;
+
     //Manejo de sesiones
     Sesion _SESION=Sesion.getInstance();
     //Declaracion de variables a utilizar
     RequestQueue requestQueue;
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
+    public static String URL=null;
     //Declaracion de la variable para guardar los datos en sesion
     private SharedPreferences preferencias;
     @Override
@@ -58,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Inicialización de variables
 
         preferencias=getSharedPreferences("preferencias", MODE_PRIVATE);
-
-
         lblRegistro = findViewById(R.id.lblRegistro);
         lblMensaje=findViewById(R.id.lblMensaje);
         this.txtClave = findViewById(R.id.txtClave);
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progeso=new ProgressDialog(this);
         progeso.setMessage(getString(R.string.MensajeCarga));
         progeso.show();
-        String url="http://tidesignsolutions.com/esperanzayvida/Modelos/Login.php?email="+txtUsuario.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
+        String url="https://sonsotrip.webcindario.com/Modelos/Login.php?email="+txtUsuario.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);
@@ -153,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 _SESION.setNombre(jsonObject.getString("nombre"));
                 _SESION.setCorreo(jsonObject.getString("email"));
                 _SESION.setId(jsonObject.getString("id"));
+                URL=jsonObject.getString("foto");
+
                 GuardarDatosShared(_SESION.getCorreo());
                 startActivity(act);
                 finish();

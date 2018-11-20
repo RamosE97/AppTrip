@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1065036794193",
+    "firebase_url": "https://sonsotripbd.firebaseio.com",
+    "project_id": "sonsotripbd",
+    "storage_bucket": "sonsotripbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065036794193:android:802874f1da099fb8",
+        "android_client_info": {
+          "package_name": "com.example.ernestoramos.apptrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065036794193-lc1jtvhuuqsv6s1fi8umhblecucq75gr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ernestoramos.apptrip",
+            "certificate_hash": "a6abd48fda758d79c3f523f62c6007016d236eb8"
+          }
+        },
+        {
+          "client_id": "1065036794193-lo4h7c3q8u6vlmtjmepli05p6git0cnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHLf8YL6MuoaNXzDcWWz8TTuQDUQ4S3ns"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065036794193-lo4h7c3q8u6vlmtjmepli05p6git0cnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
