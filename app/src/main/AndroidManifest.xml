@@ -28,6 +28,7 @@
         </activity>
         <activity android:name=".Registrar" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Item_restaurante" />
         <activity
             android:name=".Inicio"
             android:label="@string/title_activity_inicio"

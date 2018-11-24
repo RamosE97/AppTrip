@@ -1,5 +1,7 @@
 package com.example.ernestoramos.apptrip.Fragmentos;
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +15,13 @@ import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
 public class InicioFragment extends Fragment {
-    Sesion _SESION=Sesion.getInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmento_inicio, container,false);
+        View v= inflater.inflate(R.layout.fragmento_inicio, container,false);
 
+        return v;
     }
+
+
 }

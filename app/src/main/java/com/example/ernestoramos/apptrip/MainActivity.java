@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
     public static String URL=null;
+    private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/Login.php?";
     //Declaracion de la variable para guardar los datos en sesion
     private SharedPreferences preferencias;
     @Override
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progeso=new ProgressDialog(this);
         progeso.setMessage(getString(R.string.MensajeCarga));
         progeso.show();
-        String url="https://sonsotrip.webcindario.com/Modelos/Login.php?email="+txtUsuario.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
+        String url=URL_WEB_SERVICES+"email="+txtUsuario.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);

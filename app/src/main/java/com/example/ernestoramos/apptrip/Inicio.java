@@ -26,15 +26,19 @@ import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.PerfilFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
 import com.example.ernestoramos.apptrip.Mapas.ubicacion;
+import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Restaurante;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Inicio extends AppCompatActivity implements  View.OnClickListener {
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
+
+    public static ArrayList<Restaurante> lstRestaurantes = new ArrayList<>();
     //Manejo de sesiones
     private MenuItem prevMenuItem;
 
@@ -104,6 +108,7 @@ public class Inicio extends AppCompatActivity implements  View.OnClickListener {
                 break;
         }
     }
+
 
     class MyViewPager extends FragmentPagerAdapter {
         public MyViewPager(FragmentManager fm) {

@@ -42,7 +42,7 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
 
     TextView lblIniciar;
     TextView lblMensaje;
-
+    private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/registrar.php?";
     Button btnIngresar;
     @NotEmpty(messageId = R.string.usuario,order=1)
     @MinLength(value = 4, messageId = R.string.MinValueNombre, order = 2)
@@ -91,7 +91,7 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
         progeso.setMessage("Enviando datos al servidor");
         progeso.show();
 
-        String url="https://sonsotrip.webcindario.com/Modelos/registrar.php?nombre="+txtNombre.getText().toString()+"&email="+txtEmail.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
+        String url=URL_WEB_SERVICES+"nombre="+txtNombre.getText().toString()+"&email="+txtEmail.getText().toString()+"&credencial="+txtClave.getText().toString()+"";
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);
