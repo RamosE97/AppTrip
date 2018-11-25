@@ -40,9 +40,10 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
 
+
+    private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/registrar.php?";
     TextView lblIniciar;
     TextView lblMensaje;
-    private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/registrar.php?";
     Button btnIngresar;
     @NotEmpty(messageId = R.string.usuario,order=1)
     @MinLength(value = 4, messageId = R.string.MinValueNombre, order = 2)
