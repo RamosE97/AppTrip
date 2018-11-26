@@ -31,8 +31,7 @@
         <activity android:name=".Item_restaurante" />
         <activity
             android:name=".Inicio"
-            android:label="@string/title_activity_inicio"
-           />
+            android:label="@string/title_activity_inicio" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,7 +46,8 @@
 
         <activity
             android:name=".Mapas.ubicacion"
-            android:label="@string/title_activity_ubicacion"></activity>
+            android:label="@string/title_activity_ubicacion" />
+        <activity android:name=".Escaner"></activity>
     </application>
 
 </manifest>

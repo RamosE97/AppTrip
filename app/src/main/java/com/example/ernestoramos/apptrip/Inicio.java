@@ -25,7 +25,6 @@ import com.example.ernestoramos.apptrip.Fragmentos.HotelesFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.InicioFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.PerfilFragment;
 import com.example.ernestoramos.apptrip.Fragmentos.RestaurantesFragment;
-import com.example.ernestoramos.apptrip.Mapas.ubicacion;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Restaurante;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
@@ -34,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Inicio extends AppCompatActivity implements  View.OnClickListener {
+public class Inicio extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     ViewPager pager;
 
@@ -99,15 +98,6 @@ public class Inicio extends AppCompatActivity implements  View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.LinearFav:
-                    Intent intent=new Intent(getApplicationContext(), ubicacion.class);
-                    startActivity(intent);
-                break;
-        }
-    }
 
 
     class MyViewPager extends FragmentPagerAdapter {
