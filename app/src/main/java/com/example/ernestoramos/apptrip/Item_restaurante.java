@@ -123,7 +123,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
     }
     @Override
     public void onErrorResponse(VolleyError error) {
-        progeso.hide();
+        progeso.dismiss();
         //Primera verificacion, si no esta eliminado, pero si insertando, fallo en la insercion
         if(esInsercion && !esEliminacion){
             Log.e("Error guardar favorito", error.getMessage());
@@ -143,7 +143,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
 
     @Override
     public void onResponse(JSONObject response) {
-        progeso.hide();
+        progeso.dismiss();
         //Primera verificacion, si no esta eliminado, pero si insertando, entonces inserto, esFavorito se vuelve verdadero y se reemplaza la iamgen
         if(esInsercion && !esEliminacion){
                 idFav.setImageResource(R.drawable.ic_fav);
