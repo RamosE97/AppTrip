@@ -85,8 +85,8 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                 }else{
                     //Define eliminacion ya que ya es favorito
                     esEliminacion=true;
-                    EliminarFavorito();
                     esInsercion=false;
+                    EliminarFavorito();
                 }
             }
         });
@@ -128,6 +128,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         if(esInsercion && !esEliminacion){
             Log.e("Error guardar favorito", error.getMessage());
             idFav.setImageResource(R.drawable.ic_nofav);
+            esInsercion=false;
         }else{
             //Si no esta insertando y tampoco eliminando, esta consultando, fallo en consultar
             if(!esEliminacion){
@@ -148,6 +149,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                 idFav.setImageResource(R.drawable.ic_fav);
                 esFavorito=true;
         }else{
+            esFavorito=true;
             //No esta eliminando, ni insertando entonces se consulta
             if(!esEliminacion){
                 JSONArray json=response.optJSONArray("ConsultaFavoritos");
@@ -156,7 +158,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                     for(int i=0; i<json.length();i++){
                         jsonObject=json.getJSONObject(i);
                     }
-                    if(json.length()>0){
+                    if(jsonObject.getString("respuesta").equals("Ok")){
                         //Si devuelve un valor, es porque es favorito
                         idFav.setImageResource(R.drawable.ic_fav);
                         esFavorito=true;
