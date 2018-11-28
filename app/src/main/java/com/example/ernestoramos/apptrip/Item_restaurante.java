@@ -38,6 +38,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
     private final String URL_CONSULTA="https://sonsotrip.webcindario.com/Modelos/ConsultarFavoritos.php?";
     private final String URL_ELIMINACION="https://sonsotrip.webcindario.com/Modelos/EliminarFavorito.php?";
     private final String URL_CONSULTA_ITEM="https://sonsotrip.webcindario.com/Modelos/ConsultaItemIndividual.php?";
+    private final int INSERTAR=1, CONSULTARFAVORITO=2, ELIMINAR=3, CONSULTARITEM=4;
     Boolean esFavorito=false;
     //Manejo de sesiones
     Sesion _SESION=Sesion.getInstance();
@@ -64,16 +65,16 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         if(getIntent().getSerializableExtra("ObjetoRestaurante")!=null){
             objR= (Restaurante) getIntent().getSerializableExtra("ObjetoRestaurante");
             AsignacionValores(objR.getNombre(), objR.getDescripcion(), objR.getDireccion(), objR.getTelefono(), objR.getUrl());
-            opc=2;
+            opc=CONSULTARFAVORITO;
             ConsultarFavorito();
         }else{
             String valor=getIntent().getStringExtra("IDLugar");
             if(getIntent().getStringExtra("IDLugar")!=null){
                 objR= new Restaurante();
                 objR.setId(Integer.parseInt(valor));
-                opc=4;
+                opc=CONSULTARITEM;
                 ConsultarItem();
-                opc=2;
+                opc=CONSULTARFAVORITO;
                 ConsultarFavorito();
             }
         }
@@ -84,11 +85,11 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                 //Si el restaurante no es favorito, entonces permite la insercion
                 if(!esFavorito){
                     //Permite definir insercion como verdadero y eliminacion como falsa, ya que no es favorito aun
-                    opc=1;
+                    opc=INSERTAR;
                     Insertar();
                 }else{
                     //Define eliminacion ya que ya es favorito
-                    opc=3;
+                    opc=ELIMINAR;
                     EliminarFavorito();
                 }
             }
