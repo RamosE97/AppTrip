@@ -1,8 +1,6 @@
 package com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +14,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class RestauranteAdapter extends BaseAdapter {
+public class RestaurantesAdapter extends BaseAdapter {
     private Context c;
-    private ArrayList<Restaurante> lstRestaurante;
+    private ArrayList<Lugares> lstRestaurante;
     private OnItemClickListener listener;
     private LayoutInflater inflater;
 
-    public RestauranteAdapter(Context c, ArrayList<Restaurante> lst, OnItemClickListener listener) {
+    public RestaurantesAdapter(Context c, ArrayList<Lugares> lst, OnItemClickListener listener) {
         this.c = c;
         this.listener=listener;
         this.lstRestaurante = lst;
@@ -41,7 +39,7 @@ public class RestauranteAdapter extends BaseAdapter {
         return position;
     }
     public interface OnItemClickListener{
-        void onItemClick(Restaurante objRes, int position);
+        void onItemClick(Lugares objRes, int position);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -52,7 +50,7 @@ public class RestauranteAdapter extends BaseAdapter {
         TextView nombre= (TextView) convertView.findViewById(R.id.txtNombreR);
         ImageView img= (ImageView) convertView.findViewById(R.id.Imagen);
         CardView lstContainer=(CardView) convertView.findViewById(R.id.lstContainer);
-        final Restaurante obj = lstRestaurante.get(position);
+        final Lugares obj = lstRestaurante.get(position);
         final int pos=position;
         nombre.setText(obj.getNombre());
         Picasso.get()

@@ -1,7 +1,6 @@
 package com.example.ernestoramos.apptrip;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,7 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Restaurante;
+import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.squareup.picasso.Picasso;
 
@@ -45,7 +44,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
     //Controles
     private TextView txtItemNombre, txtDescripcionItem, txtDireccionItem, txtTelefonoItem;
     private ImageView ImagenItem, idFav;
-    Restaurante objR;
+    Lugares objR;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +61,15 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         requestQueue= Volley.newRequestQueue(this);
 
         //Me permite obtener el objeto enviado desde el listado de restaurantes, descargar la imagen y en base al objeto si existe cambiar el titulo de la action bar
-        if(getIntent().getSerializableExtra("ObjetoRestaurante")!=null){
-            objR= (Restaurante) getIntent().getSerializableExtra("ObjetoRestaurante");
+        if(getIntent().getSerializableExtra("objeto")!=null){
+            objR= (Lugares) getIntent().getSerializableExtra("objeto");
             AsignacionValores(objR.getNombre(), objR.getDescripcion(), objR.getDireccion(), objR.getTelefono(), objR.getUrl());
             opc=CONSULTARFAVORITO;
             ConsultarFavorito();
         }else{
             String valor=getIntent().getStringExtra("IDLugar");
             if(getIntent().getStringExtra("IDLugar")!=null){
-                objR= new Restaurante();
+                objR= new Lugares();
                 objR.setId(Integer.parseInt(valor));
                 opc=CONSULTARITEM;
                 ConsultarItem();

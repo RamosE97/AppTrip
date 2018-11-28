@@ -1,7 +1,6 @@
 package com.example.ernestoramos.apptrip.Fragmentos;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -24,16 +23,14 @@ import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.Inicio;
 import com.example.ernestoramos.apptrip.Item_restaurante;
 import com.example.ernestoramos.apptrip.R;
-import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Restaurante;
-import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.RestauranteAdapter;
+import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
+import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.RestaurantesAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class RestaurantesFragment extends Fragment implements  Response.Listener<JSONObject>, Response.ErrorListener, RestauranteAdapter.OnItemClickListener {
+public class RestaurantesFragment extends Fragment implements  Response.Listener<JSONObject>, Response.ErrorListener, RestaurantesAdapter.OnItemClickListener {
     final static String URL_WEB_SERVICE = "https://sonsotrip.webcindario.com/Modelos/ListaRestaurantes.php";
     //Declaracion de variables a utilizar
     RequestQueue requestQueue;
@@ -61,7 +58,7 @@ public class RestaurantesFragment extends Fragment implements  Response.Listener
             if(Inicio.lstRestaurantes.size()<1){
                 LlamarWebServices();
             }else{
-                RestauranteAdapter adapter=new RestauranteAdapter(getContext(), Inicio.lstRestaurantes, this);
+                RestaurantesAdapter adapter=new RestaurantesAdapter(getContext(), Inicio.lstRestaurantes, this);
                 lstR.setAdapter(adapter);
             }
         }
@@ -88,20 +85,20 @@ public class RestaurantesFragment extends Fragment implements  Response.Listener
         JSONArray json=response.optJSONArray("Restaurante");
         JSONObject jsonObject=null;
         Inicio.lstRestaurantes.clear();
-        Restaurante objRestaurante;
+        Lugares objLugares;
         try{
             for(int i=0; i<json.length();i++){
                 jsonObject=json.getJSONObject(i);
-                objRestaurante=new Restaurante();
-                objRestaurante.setId(jsonObject.getInt("id"));
-                objRestaurante.setNombre(jsonObject.getString("nombre"));
-                objRestaurante.setDireccion(jsonObject.getString("direccion"));
-                objRestaurante.setDescripcion(jsonObject.getString("descripcion"));
-                objRestaurante.setImageUrl(jsonObject.getString("url"));
-                objRestaurante.setTelefono(jsonObject.getString("telefono"));
-                Inicio.lstRestaurantes.add(objRestaurante);
+                objLugares =new Lugares();
+                objLugares.setId(jsonObject.getInt("id"));
+                objLugares.setNombre(jsonObject.getString("nombre"));
+                objLugares.setDireccion(jsonObject.getString("direccion"));
+                objLugares.setDescripcion(jsonObject.getString("descripcion"));
+                objLugares.setImageUrl(jsonObject.getString("url"));
+                objLugares.setTelefono(jsonObject.getString("telefono"));
+                Inicio.lstRestaurantes.add(objLugares);
             }
-            RestauranteAdapter adapter=new RestauranteAdapter(getContext(), Inicio.lstRestaurantes, this);
+            RestaurantesAdapter adapter=new RestaurantesAdapter(getContext(), Inicio.lstRestaurantes, this);
             lstR.setAdapter(adapter);
         }catch (JSONException e) {
             e.printStackTrace();
@@ -109,9 +106,9 @@ public class RestaurantesFragment extends Fragment implements  Response.Listener
     }
 
     @Override
-    public void onItemClick(Restaurante objRes, int position) {
+    public void onItemClick(Lugares objRes, int position) {
         Intent intent=new Intent(getContext(), Item_restaurante.class);
-        intent.putExtra("ObjetoRestaurante", objRes);
+        intent.putExtra("objeto", objRes);
         startActivity(intent);
     }
 }

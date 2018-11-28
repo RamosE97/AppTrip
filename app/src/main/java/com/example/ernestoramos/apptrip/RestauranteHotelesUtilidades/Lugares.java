@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
-public class Restaurante implements Serializable {
+public class Lugares implements Serializable {
     int id;
     String nombre;
     String url;

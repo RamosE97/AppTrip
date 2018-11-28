@@ -43,10 +43,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdxYF0OxntKwlcs2D_xRd6Yb-0azkpWBo" />
-
-        <activity
-            android:name=".Mapas.ubicacion"
-            android:label="@string/title_activity_ubicacion" />
         <activity android:name=".Escaner"></activity>
     </application>
 
