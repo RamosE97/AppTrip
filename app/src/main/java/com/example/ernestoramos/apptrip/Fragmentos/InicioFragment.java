@@ -14,22 +14,32 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ernestoramos.apptrip.Escaner;
+import com.example.ernestoramos.apptrip.Favoritos;
 import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 
 public class InicioFragment extends Fragment {
-    CardView CardEscaner;
+    CardView CardEscaner, CardFav;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragmento_inicio, container,false);
         this.CardEscaner=v.findViewById(R.id.CardEscaner);
-
+        this.CardFav=v.findViewById(R.id.CardFav);
         this.CardEscaner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(getContext()!=null) {
                     Intent intent = new Intent(getContext(), Escaner.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        this.CardFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getContext()!=null) {
+                    Intent intent = new Intent(getContext(), Favoritos.class);
                     startActivity(intent);
                 }
             }

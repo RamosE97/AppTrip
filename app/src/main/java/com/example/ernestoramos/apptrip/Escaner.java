@@ -125,7 +125,7 @@ public class Escaner  extends AppCompatActivity {
                         } else {
                             if(token.equals("1") || token.equals("2") || token.equals("3")  || token.equals("12") || token.equals("13")  || token.equals("14")   ){
                                 String valor=token;
-                                Intent intento=new Intent(getApplicationContext(), Item_restaurante.class);
+                                Intent intento=new Intent(getApplicationContext(), ItemLugares.class);
                                 intento.putExtra("IDLugar", valor);
                                 startActivity(intento);
                             }else{

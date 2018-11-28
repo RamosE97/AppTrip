@@ -37,7 +37,6 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:id="@+id/LinearFav"
-                android:onClick="onClick"
                 android:orientation="vertical">
 
                 <ImageView

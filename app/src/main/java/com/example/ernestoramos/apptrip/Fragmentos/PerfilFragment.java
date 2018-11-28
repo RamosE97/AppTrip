@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,6 +46,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.Inicio;
 import com.example.ernestoramos.apptrip.MainActivity;
 import com.example.ernestoramos.apptrip.R;
+import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.HotelesAdapter;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.example.ernestoramos.apptrip.Utilidades.UtilidadesImagenes;
 
@@ -116,6 +118,7 @@ public class PerfilFragment  extends Fragment {
 
         return v;
     }
+
     private void AbrirGaleria() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             //ask for permission

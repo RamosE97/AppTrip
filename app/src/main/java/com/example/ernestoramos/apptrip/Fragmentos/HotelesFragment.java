@@ -1,7 +1,6 @@
 package com.example.ernestoramos.apptrip.Fragmentos;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.Inicio;
-import com.example.ernestoramos.apptrip.Item_restaurante;
+import com.example.ernestoramos.apptrip.ItemLugares;
 import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.HotelesAdapter;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
@@ -88,27 +87,27 @@ public void onResponse(JSONObject response) {
         Inicio.lstRestaurantes.clear();
         Lugares objLugares;
         try{
-        for(int i=0; i<json.length();i++){
-        jsonObject=json.getJSONObject(i);
-        objLugares =new Lugares();
-        objLugares.setId(jsonObject.getInt("id"));
-        objLugares.setNombre(jsonObject.getString("nombre"));
-        objLugares.setDireccion(jsonObject.getString("direccion"));
-        objLugares.setDescripcion(jsonObject.getString("descripcion"));
-        objLugares.setImageUrl(jsonObject.getString("url"));
-        objLugares.setTelefono(jsonObject.getString("telefono"));
-        Inicio.lstHoteles.add(objLugares);
-        }
-        HotelesAdapter adapter=new HotelesAdapter(getContext(), Inicio.lstHoteles, this);
-        lstH.setAdapter(adapter);
+            for(int i=0; i<json.length();i++){
+                jsonObject=json.getJSONObject(i);
+                objLugares =new Lugares();
+                objLugares.setId(jsonObject.getInt("id"));
+                objLugares.setNombre(jsonObject.getString("nombre"));
+                objLugares.setDireccion(jsonObject.getString("direccion"));
+                objLugares.setDescripcion(jsonObject.getString("descripcion"));
+                objLugares.setImageUrl(jsonObject.getString("url"));
+                objLugares.setTelefono(jsonObject.getString("telefono"));
+                Inicio.lstHoteles.add(objLugares);
+            }
+                HotelesAdapter adapter=new HotelesAdapter(getContext(), Inicio.lstHoteles, this);
+                lstH.setAdapter(adapter);
         }catch (JSONException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
-        }
+}
 
 @Override
 public void onItemClick(Lugares objRes, int position) {
-        Intent intent=new Intent(getContext(), Item_restaurante.class);
+        Intent intent=new Intent(getContext(), ItemLugares.class);
         intent.putExtra("objeto", objRes);
         startActivity(intent);
         }

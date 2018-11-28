@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".Registrar" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Item_restaurante" />
+        <activity android:name=".ItemLugares" />
         <activity
             android:name=".Inicio"
             android:label="@string/title_activity_inicio" />
@@ -43,7 +43,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdxYF0OxntKwlcs2D_xRd6Yb-0azkpWBo" />
-        <activity android:name=".Escaner"></activity>
+
+        <activity android:name=".Escaner" />
+        <activity android:name=".Favoritos"></activity>
     </application>
 
 </manifest>

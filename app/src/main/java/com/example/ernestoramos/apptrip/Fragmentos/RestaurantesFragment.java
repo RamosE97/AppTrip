@@ -21,7 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.Inicio;
-import com.example.ernestoramos.apptrip.Item_restaurante;
+import com.example.ernestoramos.apptrip.ItemLugares;
 import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.RestaurantesAdapter;
@@ -107,7 +107,7 @@ public class RestaurantesFragment extends Fragment implements  Response.Listener
 
     @Override
     public void onItemClick(Lugares objRes, int position) {
-        Intent intent=new Intent(getContext(), Item_restaurante.class);
+        Intent intent=new Intent(getContext(), ItemLugares.class);
         intent.putExtra("objeto", objRes);
         startActivity(intent);
     }
