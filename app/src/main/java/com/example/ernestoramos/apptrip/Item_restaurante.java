@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,11 +32,13 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
     //Variables de control para web services
-    Boolean esInsercion=false, esFavorito=false, esEliminacion=false;
+    int opc=0;
     //Urls webServices
     private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/AddFavorito.php?";
     private final String URL_CONSULTA="https://sonsotrip.webcindario.com/Modelos/ConsultarFavoritos.php?";
     private final String URL_ELIMINACION="https://sonsotrip.webcindario.com/Modelos/EliminarFavorito.php?";
+    private final String URL_CONSULTA_ITEM="https://sonsotrip.webcindario.com/Modelos/ConsultaItemIndividual.php?";
+    Boolean esFavorito=false;
     //Manejo de sesiones
     Sesion _SESION=Sesion.getInstance();
     //Controles
@@ -54,62 +57,87 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         this.txtTelefonoItem=findViewById(R.id.txtTelefonoItem);
         this.idFav=findViewById(R.id.idFav);
 
+        //Inicializo la solicitud
+        requestQueue= Volley.newRequestQueue(this);
+
         //Me permite obtener el objeto enviado desde el listado de restaurantes, descargar la imagen y en base al objeto si existe cambiar el titulo de la action bar
         if(getIntent().getSerializableExtra("ObjetoRestaurante")!=null){
             objR= (Restaurante) getIntent().getSerializableExtra("ObjetoRestaurante");
-            this.txtItemNombre.setText(objR.getNombre());
-            this.txtDescripcionItem.setText(objR.getDescripcion());
-            this.txtDireccionItem.setText(objR.getDireccion());
-            this.txtTelefonoItem.setText(objR.getTelefono());
-            Picasso.get()
-                    .load(objR.getUrl())
-                    .into(this.ImagenItem);
-            if(getSupportActionBar()!=null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle(objR.getNombre());
+            AsignacionValores(objR.getNombre(), objR.getDescripcion(), objR.getDireccion(), objR.getTelefono(), objR.getUrl());
+            opc=2;
+            ConsultarFavorito();
+        }else{
+            String valor=getIntent().getStringExtra("IDLugar");
+            if(getIntent().getStringExtra("IDLugar")!=null){
+                objR= new Restaurante();
+                objR.setId(Integer.parseInt(valor));
+                opc=4;
+                ConsultarItem();
+                opc=2;
+                ConsultarFavorito();
             }
-
         }
-        //Inicializo la solicitud
-        requestQueue= Volley.newRequestQueue(this);
         //Listener a la imageView de favoritos
         idFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //Si el restaurante no es favorito, entonces permite la insercion
+                //Si el restaurante no es favorito, entonces permite la insercion
                 if(!esFavorito){
                     //Permite definir insercion como verdadero y eliminacion como falsa, ya que no es favorito aun
-                    esInsercion =true;
-                    esEliminacion=false;
-                    LlamarWebServices();
+                    opc=1;
+                    Insertar();
                 }else{
                     //Define eliminacion ya que ya es favorito
-                    esEliminacion=true;
-                    esInsercion=false;
+                    opc=3;
                     EliminarFavorito();
                 }
             }
         });
-        esInsercion=false;
-        LlamarWebServices();
     }
 
-    private void LlamarWebServices(){
+    private void AsignacionValores(String nom, String descrip, String direc, String Tel, String Url){
+        this.txtItemNombre.setText(nom);
+        this.txtDescripcionItem.setText(descrip);
+        this.txtDireccionItem.setText(direc);
+        this.txtTelefonoItem.setText(Tel);
+        Picasso.get()
+                .load(Url)
+                .into(this.ImagenItem);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(nom);
+        }
+    }
+
+    private void Insertar(){
         //Permite insertar o consultar en base a boolean esInsercion
         progeso=new ProgressDialog(this);
         progeso.setMessage("Cargando...");
         progeso.show();
-        if(esInsercion){
-            String url=URL_WEB_SERVICES+"idLugares="+objR.getId()+"&idUsuarios="+_SESION.getId();
-            url.replace(" ","%20");
-            jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-            requestQueue.add(jsonObjectRequest);
-        }else{
-            String url=URL_CONSULTA+"idLugares="+objR.getId()+"&idUsuarios="+_SESION.getId();
-            url.replace(" ","%20");
-            jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-            requestQueue.add(jsonObjectRequest);
-        }
+        String url=URL_WEB_SERVICES+"idLugares="+objR.getId()+"&idUsuarios="+_SESION.getId();
+        url.replace(" ","%20");
+        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        requestQueue.add(jsonObjectRequest);
+    }
+    private void ConsultarFavorito(){
+        progeso=new ProgressDialog(this);
+        progeso.setMessage("Cargando...");
+        progeso.show();
+        String url=URL_CONSULTA+"idLugares="+objR.getId()+"&idUsuarios="+_SESION.getId();
+        url.replace(" ","%20");
+        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        requestQueue.add(jsonObjectRequest);
+    }
+    private void ConsultarItem(){
+        //Metodo destinado solo a eliminar
+        progeso=new ProgressDialog(this);
+        progeso.setMessage("Cargando...");
+        progeso.show();
+        String url=URL_CONSULTA_ITEM+"idLugares="+objR.getId();
+        url.replace(" ","%20");
+        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        requestQueue.add(jsonObjectRequest);
+
     }
     private void EliminarFavorito(){
         //Metodo destinado solo a eliminar
@@ -124,34 +152,40 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
     @Override
     public void onErrorResponse(VolleyError error) {
         progeso.dismiss();
-        //Primera verificacion, si no esta eliminado, pero si insertando, fallo en la insercion
-        if(esInsercion && !esEliminacion){
-            Log.e("Error guardar favorito", error.getMessage());
-            idFav.setImageResource(R.drawable.ic_nofav);
-            esInsercion=false;
-        }else{
-            //Si no esta insertando y tampoco eliminando, esta consultando, fallo en consultar
-            if(!esEliminacion){
-                Log.e("No se pudo consultar", error.getMessage());
+        switch (opc){
+            //Insertar
+            case 1:
+                Log.e("Error guardar favorito", error.getMessage());
+                idFav.setImageResource(R.drawable.ic_nofav);
                 esFavorito=false;
-            }else{
-                //No inserta, no consulta, entonces elimina
+                break;
+                //Consultar
+            case 2:
+                Log.e("No se pudo consultar", error.getMessage());
+                break;
+                //Eliminar
+            case 3:
                 Log.e("No se pudo eliminar", error.getMessage());
-            }
+                break;
+                //Item
+            case 4:
+                Log.e("Fallo item individual", error.getMessage());
+                finish();
+                break;
         }
     }
 
     @Override
     public void onResponse(JSONObject response) {
         progeso.dismiss();
-        //Primera verificacion, si no esta eliminado, pero si insertando, entonces inserto, esFavorito se vuelve verdadero y se reemplaza la iamgen
-        if(esInsercion && !esEliminacion){
-                idFav.setImageResource(R.drawable.ic_fav);
+        switch (opc){
+            //Insercion
+            case 1:
                 esFavorito=true;
-        }else{
-            esFavorito=true;
-            //No esta eliminando, ni insertando entonces se consulta
-            if(!esEliminacion){
+                idFav.setImageResource(R.drawable.ic_fav);
+                break;
+                //Consultar favorito
+            case 2:{
                 JSONArray json=response.optJSONArray("ConsultaFavoritos");
                 JSONObject jsonObject=null;
                 try{
@@ -164,18 +198,40 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                         esFavorito=true;
                     }else{
                         //No devuelve, no es favorito
-                        idFav.setImageResource(R.drawable.ic_nofav);
                         esFavorito=false;
+                        idFav.setImageResource(R.drawable.ic_nofav);
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }else{
-                //Se elimino con exito, se desmarca esFavorito
-                idFav.setImageResource(R.drawable.ic_nofav);
-                esFavorito=false;
             }
+                break;
+            //Eliminacion
+            case 3:
+                esFavorito=false;
+                idFav.setImageResource(R.drawable.ic_nofav);
+                break;
+                //Item
+            case 4:{
+                JSONArray json=response.optJSONArray("Item");
+                JSONObject jsonObject=null;
+                try{
+                    for(int i=0; i<json.length();i++){
+                        jsonObject=json.getJSONObject(i);
+                    }
+                    if(jsonObject.getString("respuesta").equals("Ok")){
+                        AsignacionValores(jsonObject.getString("nombre"),jsonObject.getString("descripcion"),jsonObject.getString("direccion"),jsonObject.getString("telefono"),  jsonObject.getString("url") );
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Intente nuevamente", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+                break;
         }
+        //Primera verificacion, si no esta eliminado, pero si insertando, entonces inserto, esFavorito se vuelve verdadero y se reemplaza la iamgen
     }
 
     @Override

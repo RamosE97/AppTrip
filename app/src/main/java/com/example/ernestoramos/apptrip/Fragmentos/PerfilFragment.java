@@ -101,9 +101,11 @@ public class PerfilFragment  extends Fragment {
             }
         });
 
-        if(!MainActivity.URL.contains("null")){
-            CargaImagenes nuevaTarea=new CargaImagenes();
-            nuevaTarea.execute(MainActivity.URL);
+        if(MainActivity.URL!=null) {
+            if (!MainActivity.URL.contains("null")) {
+                CargaImagenes nuevaTarea = new CargaImagenes();
+                nuevaTarea.execute(MainActivity.URL);
+            }
         }
         addPic.setOnClickListener(new View.OnClickListener() {
             @Override
