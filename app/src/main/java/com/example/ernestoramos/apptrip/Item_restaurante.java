@@ -74,8 +74,6 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                 objR.setId(Integer.parseInt(valor));
                 opc=CONSULTARITEM;
                 ConsultarItem();
-                opc=CONSULTARFAVORITO;
-                ConsultarFavorito();
             }
         }
         //Listener a la imageView de favoritos
@@ -134,7 +132,7 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         progeso=new ProgressDialog(this);
         progeso.setMessage("Cargando...");
         progeso.show();
-        String url=URL_CONSULTA_ITEM+"idLugares="+objR.getId();
+        String url=URL_CONSULTA_ITEM+"idLugares="+objR.getId()+"&idUsuarios="+_SESION.getId();
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);
@@ -181,9 +179,10 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
         progeso.dismiss();
         switch (opc){
             //Insercion
-            case 1:
-                esFavorito=true;
-                idFav.setImageResource(R.drawable.ic_fav);
+            case 1: {
+                        idFav.setImageResource(R.drawable.ic_fav);
+                        esFavorito=true;
+            }
                 break;
                 //Consultar favorito
             case 2:{
@@ -222,6 +221,14 @@ public class Item_restaurante  extends AppCompatActivity implements Response.Lis
                     }
                     if(jsonObject.getString("respuesta").equals("Ok")){
                         AsignacionValores(jsonObject.getString("nombre"),jsonObject.getString("descripcion"),jsonObject.getString("direccion"),jsonObject.getString("telefono"),  jsonObject.getString("url") );
+                        if(jsonObject.getString("fav").equals("Ok")){
+                            idFav.setImageResource(R.drawable.ic_fav);
+                            esFavorito=true;
+                        }else{
+                            //No devuelve, no es favorito
+                            esFavorito=false;
+                            idFav.setImageResource(R.drawable.ic_nofav);
+                        }
                     }else{
                         Toast.makeText(getApplicationContext(), "Intente nuevamente", Toast.LENGTH_SHORT).show();
                         finish();
