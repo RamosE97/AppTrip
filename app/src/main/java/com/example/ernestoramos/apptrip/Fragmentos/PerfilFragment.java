@@ -48,6 +48,7 @@ import com.example.ernestoramos.apptrip.Inicio;
 import com.example.ernestoramos.apptrip.MainActivity;
 import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.HotelesAdapter;
+import com.example.ernestoramos.apptrip.Sesion.Acercade;
 import com.example.ernestoramos.apptrip.Sesion.Configuracion;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.example.ernestoramos.apptrip.Utilidades.UtilidadesImagenes;
@@ -76,7 +77,7 @@ public class PerfilFragment  extends Fragment {
     private StringRequest stringRequest;
     Bitmap bitmap;
     ImageView addPic, profilePic;
-    TextView lblConfi;
+    TextView lblConfi,lblAcercade;
     ProgressDialog pDialog;
     @Nullable
     @Override
@@ -94,6 +95,7 @@ public class PerfilFragment  extends Fragment {
         profilePic=(ImageView)v.findViewById(R.id.profilePic);
         Button btnCerrarSesion=(Button)v.findViewById(R.id.btnCerrarSesion);
         lblConfi= (TextView) v.findViewById(R.id.config);
+        lblAcercade= (TextView) v.findViewById(R.id.about);
 
         //Variable adicional
         requestQueue = Volley.newRequestQueue(getContext());
@@ -106,6 +108,14 @@ public class PerfilFragment  extends Fragment {
                 startActivity(intent);
             }
         });
+        lblAcercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Acercade.class);
+                startActivity(intent);
+            }
+        });
+
         //Listener en una sóla linea
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

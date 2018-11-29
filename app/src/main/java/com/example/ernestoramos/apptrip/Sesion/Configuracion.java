@@ -2,6 +2,7 @@ package com.example.ernestoramos.apptrip.Sesion;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,7 @@ import eu.inmite.android.lib.validations.form.annotations.NotEmpty;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
 
 
-public class Configuracion extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener{
+public class Configuracion extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener, View.OnFocusChangeListener {
 
     Sesion _SESION=Sesion.getInstance();
     @NotEmpty(messageId = R.string.contraseña, order=5)
@@ -119,4 +120,44 @@ public class Configuracion extends AppCompatActivity implements Response.Listene
 
         finish();
     }
+
+    @Override
+    public void onFocusChange(View v, boolean b) {
+        switch (v.getId()) {
+            case R.id.txtClave: {
+                String vtext=txtClave.getText().toString();
+                if (b) {
+                    if(txtClave.getText().toString().contains(getString(R.string.IngresePass))){
+                        txtClave.setText("");
+                    }else {
+                        txtClave.setText(vtext);
+                    }
+                    txtClave.setTextColor(Color.BLACK);
+                }else{
+                    if(txtClave.getText().toString().isEmpty()){
+                        txtClave.setText(R.string.IngresePass);
+                        txtClave.setTextColor(Color.parseColor("#afafaf"));
+                    }
+                }
+            }
+            break;
+            case R.id.txtConfirmarClave:{
+                String vtext = txtConfirmarClave.getText().toString();
+                if (b) {
+                    if (txtConfirmarClave.getText().toString().contains(getString(R.string.IngreseConfirmPass))) {
+                        txtConfirmarClave.setText("");
+                    } else {
+                        txtConfirmarClave.setText(vtext);
+                    }
+                    txtConfirmarClave.setTextColor(Color.BLACK);
+                } else {
+                    if (txtConfirmarClave.getText().toString().isEmpty()) {
+                        txtConfirmarClave.setText(R.string.IngreseConfirmPass);
+                        txtConfirmarClave.setTextColor(Color.parseColor("#afafaf"));
+                    }
+                }
+            }
+        }
+    }
+
 }
