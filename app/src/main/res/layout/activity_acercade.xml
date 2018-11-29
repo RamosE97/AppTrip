@@ -1,9 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sesion.Acercade">
+    tools:context=".Sesion.Acercade"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/ver"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Versión de la app"/>
+    <TextView
+        android:id="@+id/about"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sonsotrip 2.0.2 "/>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/linea"
+        />
+    <TextView
+        android:id="@+id/dir"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Direccion"/>
+    <TextView
+        android:id="@+id/dire"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sonsonate, El salvador"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/linea"
+        />
+    <TextView
+        android:id="@+id/em"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"/>
+    <TextView
+        android:id="@+id/emai"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sonsotrip@gmail.com"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/linea"
+        />
+    <TextView
+        android:id="@+id/desa"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Desarrolladores"/>
+    <TextView
+        android:id="@+id/desa1"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ernesto Ramos"/>
+    <TextView
+        android:id="@+id/desa2"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Karen Ocampo"/>
+    <TextView
+        android:id="@+id/desa2"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="8dp"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adiel Ramos"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/linea"
+        />
+</LinearLayout>
