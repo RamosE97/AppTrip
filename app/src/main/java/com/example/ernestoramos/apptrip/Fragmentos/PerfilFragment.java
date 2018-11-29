@@ -43,10 +43,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ernestoramos.apptrip.Escaner;
 import com.example.ernestoramos.apptrip.Inicio;
 import com.example.ernestoramos.apptrip.MainActivity;
 import com.example.ernestoramos.apptrip.R;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.HotelesAdapter;
+import com.example.ernestoramos.apptrip.Sesion.Configuracion;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.example.ernestoramos.apptrip.Utilidades.UtilidadesImagenes;
 
@@ -74,7 +76,7 @@ public class PerfilFragment  extends Fragment {
     private StringRequest stringRequest;
     Bitmap bitmap;
     ImageView addPic, profilePic;
-
+    TextView lblConfi;
     ProgressDialog pDialog;
     @Nullable
     @Override
@@ -91,10 +93,19 @@ public class PerfilFragment  extends Fragment {
         addPic=(ImageView)v.findViewById(R.id.addPic);
         profilePic=(ImageView)v.findViewById(R.id.profilePic);
         Button btnCerrarSesion=(Button)v.findViewById(R.id.btnCerrarSesion);
+        lblConfi= (TextView) v.findViewById(R.id.config);
 
         //Variable adicional
         requestQueue = Volley.newRequestQueue(getContext());
 
+
+        lblConfi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Configuracion.class);
+                startActivity(intent);
+            }
+        });
         //Listener en una sóla linea
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,6 +26,7 @@ public class InicioFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragmento_inicio, container,false);
         this.CardEscaner=v.findViewById(R.id.CardEscaner);
         this.CardFav=v.findViewById(R.id.CardFav);
+
         this.CardEscaner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

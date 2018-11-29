@@ -1,0 +1,15 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:shape="line">
+
+    <solid android:color="#a9a9a9" />
+
+    <stroke
+        android:width="1dip"
+        android:color="#a9a9a9" />
+</shape>

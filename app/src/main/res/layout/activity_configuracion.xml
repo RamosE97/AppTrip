@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/label"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registrar">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:id="@+id/lblTitulo"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        android:layout_height="40dp"
+        android:text="Configuración de tus datos"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/lblContra"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="Cambia tu contraseña"
+            android:gravity="center"/>
+    </LinearLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:theme="@style/TextLabel"
+        app:passwordToggleEnabled="true">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/txtClave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/lock"
+            android:hint="Escriba su contraseña"
+            android:inputType="textPassword"
+            app:met_floatingLabel="highlight" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:theme="@style/TextLabel"
+        app:passwordToggleEnabled="true">
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_gravity="center"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/lock"
+            app:met_floatingLabel="highlight"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtConfirmarClave"
+            android:hint="Confirme su contraseña"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lblMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#E74C3C"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:id="@+id/btnGuardarConfi"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="Guardar cambios" />
+
+
+
+</LinearLayout>

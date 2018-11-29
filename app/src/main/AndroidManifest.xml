@@ -45,7 +45,10 @@
             android:value="AIzaSyDdxYF0OxntKwlcs2D_xRd6Yb-0azkpWBo" />
 
         <activity android:name=".Escaner" />
-        <activity android:name=".Favoritos"></activity>
+        <activity android:name=".Favoritos" />
+        <activity android:name=".Sesion.Acercade" />
+        <activity android:name=".Sesion.Ayuda" />
+        <activity android:name=".Sesion.Configuracion"></activity>
     </application>
 
 </manifest>
