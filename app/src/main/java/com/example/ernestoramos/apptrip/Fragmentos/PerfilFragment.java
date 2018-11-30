@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -52,6 +53,7 @@ import com.example.ernestoramos.apptrip.Sesion.Acercade;
 import com.example.ernestoramos.apptrip.Sesion.Configuracion;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.example.ernestoramos.apptrip.Utilidades.UtilidadesImagenes;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
@@ -126,8 +128,9 @@ public class PerfilFragment  extends Fragment {
 
         if(MainActivity.URL!=null) {
             if (!MainActivity.URL.contains("null")) {
-                CargaImagenes nuevaTarea = new CargaImagenes();
-                nuevaTarea.execute(MainActivity.URL);
+                Picasso.get()
+                        .load(MainActivity.URL  )
+                        .into(this.profilePic);
             }
         }
         addPic.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +139,6 @@ public class PerfilFragment  extends Fragment {
                 AbrirGaleria();
             }
         });
-
         return v;
     }
 
@@ -216,16 +218,7 @@ public class PerfilFragment  extends Fragment {
                     e.printStackTrace();
                 }
                 bitmap=UtilidadesImagenes.reducirImagen(bitmap);
-                //extraemos el drawable en un bitmap
-                Drawable originalDrawable =  new BitmapDrawable(getResources(), bitmap);
-                Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
-
-                //creamos el drawable redondeado
-                RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
-
-                //asignamos el CornerRadius
-                roundedDrawable.setCornerRadius(originalBitmap.getHeight());
-                profilePic.setImageDrawable(roundedDrawable);
+                profilePic.setImageBitmap(bitmap);
                 CargarWebServices();
 
             } catch (IOException e) {
@@ -242,60 +235,4 @@ public class PerfilFragment  extends Fragment {
         startActivity(inten);
     }
 
-    public class CargaImagenes extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-
-            pDialog.setMessage("Cargando Imagen");
-            pDialog.setCancelable(true);
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            Log.i("doInBackground" , "Entra en doInBackground");
-            String url = params[0];
-            Bitmap imagen = descargarImagen(url);
-            return imagen;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            Sesion.getInstance().setFoto(result);
-            Bitmap bmp=UtilidadesImagenes.reducirImagen(_SESION.getFoto());
-            //extraemos el drawable en un bitmap
-            Drawable originalDrawable =  new BitmapDrawable(getResources(), bmp);
-            Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
-
-            //creamos el drawable redondeado
-            RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
-
-            //asignamos el CornerRadius
-            roundedDrawable.setCornerRadius(originalBitmap.getHeight());
-            profilePic.setImageDrawable(roundedDrawable);
-            pDialog.dismiss();
-        }
-        private Bitmap descargarImagen (String imageHttpAddress){
-            URL imageUrl = null;
-            Bitmap imagen = null;
-            try{
-                imageUrl = new URL(imageHttpAddress);
-                HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-                conn.connect();
-                imagen = BitmapFactory.decodeStream(conn.getInputStream());
-            }catch(IOException ex){
-                ex.printStackTrace();
-            }
-
-            return imagen;
-        }
-    }
 }
