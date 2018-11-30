@@ -47,6 +47,9 @@
 
         <activity android:name=".Escaner" />
         <activity android:name=".Favoritos" />
+        <activity android:name=".Sesion.Configuracion" />
+        <activity android:name=".Sesion.Ayuda" />
+        <activity android:name=".Sesion.Acercade" />
         <activity android:name=".SinConexion"></activity>
     </application>
 

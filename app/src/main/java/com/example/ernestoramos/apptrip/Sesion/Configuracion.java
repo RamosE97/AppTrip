@@ -55,6 +55,13 @@ public class Configuracion extends AppCompatActivity implements Response.Listene
         txtConfirmarClave = findViewById(R.id.txtConfirmarClave);
         btnGuardarConfi = findViewById(R.id.btnGuardarConfi);
         lblMensaje = findViewById(R.id.lblMensaje);
+
+        txtConfirmarClave.setText(R.string.IngreseConfirmPass);
+        txtConfirmarClave.setTextColor(Color.parseColor("#afafaf"));
+        txtClave.setText(R.string.IngresePass);
+        txtClave.setTextColor(Color.parseColor("#afafaf"));
+        txtClave.setOnFocusChangeListener(this);
+        txtConfirmarClave.setOnFocusChangeListener(this);
         //Inicializando variable
         requestQueue= Volley.newRequestQueue(this);
         c=this;
