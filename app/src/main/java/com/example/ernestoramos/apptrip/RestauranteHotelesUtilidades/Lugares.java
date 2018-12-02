@@ -12,6 +12,8 @@ public class Lugares implements Serializable {
     String direccion;
     String descripcion;
     String telefono;
+    String latitud;
+    String longitud;
     public int getId() {
         return id;
     }
@@ -54,4 +56,19 @@ public class Lugares implements Serializable {
         this.telefono = telefono;
     }
 
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
 }

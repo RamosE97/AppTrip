@@ -43,7 +43,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDdxYF0OxntKwlcs2D_xRd6Yb-0azkpWBo" />
+            android:value="AIzaSyBzp4eh91iI3jkC06VLB0lMJkfeYXSi_lo" />
 
         <activity android:name=".Escaner" />
         <activity android:name=".Favoritos" />

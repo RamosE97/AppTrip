@@ -96,6 +96,8 @@ public void onResponse(JSONObject response) {
                 objLugares.setDescripcion(jsonObject.getString("descripcion"));
                 objLugares.setImageUrl(jsonObject.getString("url"));
                 objLugares.setTelefono(jsonObject.getString("telefono"));
+                objLugares.setLatitud(jsonObject.getString("latitud"));
+                objLugares.setLongitud(jsonObject.getString("longitud"));
                 Inicio.lstHoteles.add(objLugares);
             }
                 HotelesAdapter adapter=new HotelesAdapter(getContext(), Inicio.lstHoteles, this);

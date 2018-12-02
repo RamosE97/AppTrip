@@ -30,6 +30,8 @@ public class Favoritos extends AppCompatActivity implements Response.Listener<JS
     RequestQueue requestQueue;
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
+    final int ESFAVORITO=1;
+    FavoritosAdapter adapter;
     //Urls webServices
     private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/ListaFavoritos.php?";
     Sesion _SESION=Sesion.getInstance();
@@ -53,7 +55,7 @@ public class Favoritos extends AppCompatActivity implements Response.Listener<JS
         progeso=new ProgressDialog(this);
         progeso.setMessage("Cargando...");
         progeso.show();
-        String url=URL_WEB_SERVICES+"&idUsuarios="+_SESION.getId();
+        String url=URL_WEB_SERVICES+"idUsuarios="+_SESION.getId();
         url.replace(" ","%20");
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonObjectRequest);
@@ -83,16 +85,22 @@ public class Favoritos extends AppCompatActivity implements Response.Listener<JS
         try{
             for(int i=0; i<json.length();i++){
                 jsonObject=json.getJSONObject(i);
-                objLugares =new Lugares();
-                objLugares.setId(jsonObject.getInt("id"));
-                objLugares.setNombre(jsonObject.getString("nombre"));
-                objLugares.setDireccion(jsonObject.getString("direccion"));
-                objLugares.setDescripcion(jsonObject.getString("descripcion"));
-                objLugares.setImageUrl(jsonObject.getString("url"));
-                objLugares.setTelefono(jsonObject.getString("telefono"));
-                lstFavoritos.add(objLugares);
+                if(jsonObject.getString("respuesta").equals("Ok")) {
+                    objLugares = new Lugares();
+                    objLugares.setId(jsonObject.getInt("id"));
+                    objLugares.setNombre(jsonObject.getString("nombre"));
+                    objLugares.setDireccion(jsonObject.getString("direccion"));
+                    objLugares.setDescripcion(jsonObject.getString("descripcion"));
+                    objLugares.setImageUrl(jsonObject.getString("url"));
+                    objLugares.setTelefono(jsonObject.getString("telefono"));
+                    objLugares.setLatitud(jsonObject.getString("latitud"));
+                    objLugares.setLongitud(jsonObject.getString("longitud"));
+                    lstFavoritos.add(objLugares);
+                }else{
+                    lstFavoritos.clear();
+                }
             }
-            FavoritosAdapter adapter=new FavoritosAdapter(this, lstFavoritos, this);
+            adapter=new FavoritosAdapter(this, lstFavoritos, this);
             lstFav.setAdapter(adapter);
         }catch (JSONException e) {
             e.printStackTrace();
@@ -100,9 +108,21 @@ public class Favoritos extends AppCompatActivity implements Response.Listener<JS
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ESFAVORITO) {
+            if (resultCode == RESULT_OK) {
+                boolean esFav= data.getBooleanExtra("EsFav", true);
+                if(!esFav){
+                    Consulta();
+                }
+            }
+        }
+    }
+    @Override
     public void onItemClick(Lugares objRes, int position) {
         Intent intent=new Intent(this, ItemLugares.class);
         intent.putExtra("objeto", objRes);
-        startActivity(intent);
+        startActivityForResult(intent,ESFAVORITO);
     }
+
 }

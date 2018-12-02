@@ -96,6 +96,8 @@ public class RestaurantesFragment extends Fragment implements  Response.Listener
                 objLugares.setDescripcion(jsonObject.getString("descripcion"));
                 objLugares.setImageUrl(jsonObject.getString("url"));
                 objLugares.setTelefono(jsonObject.getString("telefono"));
+                objLugares.setLatitud(jsonObject.getString("latitud"));
+                objLugares.setLongitud(jsonObject.getString("longitud"));
                 Inicio.lstRestaurantes.add(objLugares);
             }
             RestaurantesAdapter adapter=new RestaurantesAdapter(getContext(), Inicio.lstRestaurantes, this);

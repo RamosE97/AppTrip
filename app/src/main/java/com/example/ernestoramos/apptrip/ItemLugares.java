@@ -1,7 +1,12 @@
 package com.example.ernestoramos.apptrip;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,13 +23,22 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
+import com.example.ernestoramos.apptrip.directionhelpers.FetchURL;
+import com.example.ernestoramos.apptrip.directionhelpers.TaskLoadedCallback;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener, OnMapReadyCallback, TaskLoadedCallback {
 
     //Variables a utilizar
     RequestQueue requestQueue;
@@ -45,6 +59,13 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
     private TextView txtItemNombre, txtDescripcionItem, txtDireccionItem, txtTelefonoItem;
     private ImageView ImagenItem, idFav;
     Lugares objR;
+
+    //Todo lo del mapa
+    private GoogleMap mMap;
+    private static  final int LOCATION_REQUEST = 500;
+    private MarkerOptions place1, place2;
+    private Polyline currentPolyline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +112,51 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
                 }
             }
         });
+
+        //Mapa
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapNearBy);
+        mapFragment.getMapAsync(this);
+
+
+        place2 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title("Location 2");
+
+        String url = getUrl(place1.getPosition(),place2.getPosition(),"driving");
+        new FetchURL(ItemLugares.this).execute(url, "driving");
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_REQUEST);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.addMarker(place1);
+    }
+
+    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        // Mode
+        String mode = "mode=" + directionMode;
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        // Output format
+        String output = "json";
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyBzp4eh91iI3jkC06VLB0lMJkfeYXSi_lo";
+        return url;
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if (currentPolyline != null)
+            currentPolyline.remove();
+        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 
     private void AsignacionValores(String nom, String descrip, String direc, String Tel, String Url){
@@ -171,6 +237,14 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = getIntent();
+        returnIntent.putExtra("EsFav",esFavorito);
+        setResult(RESULT_OK,returnIntent);
+        super.onBackPressed();
     }
 
     @Override
