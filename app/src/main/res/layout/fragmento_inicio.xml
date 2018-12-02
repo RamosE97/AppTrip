@@ -16,7 +16,7 @@
         android:layout_height="200dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/v"
+        app:srcCompat="@drawable/fondo"
         />
 
     <LinearLayout
