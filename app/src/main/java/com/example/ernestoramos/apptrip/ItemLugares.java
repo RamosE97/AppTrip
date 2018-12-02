@@ -23,22 +23,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
-import com.example.ernestoramos.apptrip.directionhelpers.FetchURL;
-import com.example.ernestoramos.apptrip.directionhelpers.TaskLoadedCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener, OnMapReadyCallback, TaskLoadedCallback {
+public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener, OnMapReadyCallback {
 
     //Variables a utilizar
     RequestQueue requestQueue;
@@ -63,8 +59,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
     //Todo lo del mapa
     private GoogleMap mMap;
     private static  final int LOCATION_REQUEST = 500;
-    private MarkerOptions place1, place2;
-    private Polyline currentPolyline;
+    private MarkerOptions place1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,13 +112,10 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapNearBy);
         mapFragment.getMapAsync(this);
 
+        place1 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title(objR.getNombre());
 
-        place2 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title("Location 2");
-        place1 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title("Location 2");
-
-        String url = getUrl(place1.getPosition(),place2.getPosition(),"driving");
-        new FetchURL(ItemLugares.this).execute(url, "driving");
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -135,32 +127,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
         }
         mMap.setMyLocationEnabled(true);
         mMap.addMarker(place1);
-        mMap.addMarker(place2);
     }
-
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
-        String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
-        String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyBzp4eh91iI3jkC06VLB0lMJkfeYXSi_lo";
-        return url;
-    }
-
-    @Override
-    public void onTaskDone(Object... values) {
-        if (currentPolyline != null)
-            currentPolyline.remove();
-        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-    }
-
     private void AsignacionValores(String nom, String descrip, String direc, String Tel, String Url){
         this.txtItemNombre.setText(nom);
         this.txtDescripcionItem.setText(descrip);
