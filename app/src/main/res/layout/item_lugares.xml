@@ -117,15 +117,17 @@
             android:layout_weight="2"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <fragment
-        android:id="@+id/mapNearBy"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/rvToolbar"/>
+
+    <Button
+        android:id="@+id/btnUbicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/buttonstyle"
+        android:text="Ver ubicación" />
+
 </LinearLayout>
 
 </ScrollView>

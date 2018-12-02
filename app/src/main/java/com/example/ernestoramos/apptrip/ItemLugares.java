@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ernestoramos.apptrip.Mapa.MapaUbicacion;
 import com.example.ernestoramos.apptrip.RestauranteHotelesUtilidades.Lugares;
 import com.example.ernestoramos.apptrip.Sesion.Sesion;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,12 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener, OnMapReadyCallback {
+public class ItemLugares extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     //Variables a utilizar
     RequestQueue requestQueue;
     JsonObjectRequest jsonObjectRequest;
     ProgressDialog progeso;
+    Button btnUbicacion;
     //Urls webServices
     private final String URL_WEB_SERVICES="https://sonsotrip.webcindario.com/Modelos/AddFavorito.php?";
     private final String URL_CONSULTA="https://sonsotrip.webcindario.com/Modelos/ConsultarFavoritos.php?";
@@ -56,10 +59,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
     private ImageView ImagenItem, idFav;
     Lugares objR;
 
-    //Todo lo del mapa
-    private GoogleMap mMap;
-    private static  final int LOCATION_REQUEST = 500;
-    private MarkerOptions place1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
         this.txtDireccionItem=findViewById(R.id.txtDireccionItem);
         this.txtTelefonoItem=findViewById(R.id.txtTelefonoItem);
         this.idFav=findViewById(R.id.idFav);
-
+        this.btnUbicacion = findViewById(R.id.btnUbicacion);
         //Inicializo la solicitud
         requestQueue= Volley.newRequestQueue(this);
 
@@ -107,27 +107,21 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
                 }
             }
         });
-
-        //Mapa
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapNearBy);
-        mapFragment.getMapAsync(this);
-
-        place1 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title(objR.getNombre());
+        btnUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ubi = new Intent(ItemLugares.this, MapaUbicacion.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("lugar",objR);
+                ubi.putExtras(bundle);
+                startActivity(ubi);
+            }
+        });
 
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_REQUEST);
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.addMarker(place1);
-    }
+
     private void AsignacionValores(String nom, String descrip, String direc, String Tel, String Url){
         this.txtItemNombre.setText(nom);
         this.txtDescripcionItem.setText(descrip);
