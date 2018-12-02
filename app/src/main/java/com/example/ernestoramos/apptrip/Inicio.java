@@ -33,9 +33,10 @@ public class Inicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
-        if(getSupportActionBar()!=null) {
+       /* if(getSupportActionBar()!=null) {
             getSupportActionBar().hide();
-        }
+        }*/
+       setTitle("SonsoTrip");
         bottomNavigationView = findViewById(R.id.bottom_nav);
         pager = findViewById(R.id.fragment_container);
 
@@ -65,6 +66,9 @@ public class Inicio extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.Inicio:
                         opc = 0;
+                        if(opc==0){
+                            getSupportActionBar().hide();
+                        }
                         break;
                     case R.id.Hotel:
                         opc = 1;
