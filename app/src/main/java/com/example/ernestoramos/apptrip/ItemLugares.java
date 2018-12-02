@@ -119,6 +119,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
 
 
         place2 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title("Location 2");
+        place1 = new MarkerOptions().position(new LatLng(Double.parseDouble(objR.getLatitud()), Double.parseDouble(objR.getLongitud()))).title("Location 2");
 
         String url = getUrl(place1.getPosition(),place2.getPosition(),"driving");
         new FetchURL(ItemLugares.this).execute(url, "driving");
@@ -134,6 +135,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
         }
         mMap.setMyLocationEnabled(true);
         mMap.addMarker(place1);
+        mMap.addMarker(place2);
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
