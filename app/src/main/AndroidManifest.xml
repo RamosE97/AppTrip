@@ -32,7 +32,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAtoX-4NT3Lzo4DBVssd513nWnXAeDnVAs" />
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".Splash">
             <intent-filter>
