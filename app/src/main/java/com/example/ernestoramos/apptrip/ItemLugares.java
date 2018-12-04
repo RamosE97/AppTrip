@@ -257,6 +257,8 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
                     }
                     if(jsonObject.getString("respuesta").equals("Ok")){
                         AsignacionValores(jsonObject.getString("nombre"),jsonObject.getString("descripcion"),jsonObject.getString("direccion"),jsonObject.getString("telefono"),  jsonObject.getString("url") );
+                        objR.setLongitud(jsonObject.getString("longitud"));
+                        objR.setLatitud(jsonObject.getString("latitud"));
                         if(jsonObject.getString("fav").equals("Ok")){
                             idFav.setImageResource(R.drawable.ic_fav);
                             esFavorito=true;
