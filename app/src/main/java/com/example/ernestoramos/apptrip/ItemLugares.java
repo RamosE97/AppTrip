@@ -257,6 +257,7 @@ public class ItemLugares extends AppCompatActivity implements Response.Listener<
                     }
                     if(jsonObject.getString("respuesta").equals("Ok")){
                         AsignacionValores(jsonObject.getString("nombre"),jsonObject.getString("descripcion"),jsonObject.getString("direccion"),jsonObject.getString("telefono"),  jsonObject.getString("url") );
+                        objR.setNombre(jsonObject.getString("nombre"));
                         objR.setLongitud(jsonObject.getString("longitud"));
                         objR.setLatitud(jsonObject.getString("latitud"));
                         if(jsonObject.getString("fav").equals("Ok")){

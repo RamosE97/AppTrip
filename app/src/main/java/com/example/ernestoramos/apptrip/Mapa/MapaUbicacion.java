@@ -39,6 +39,9 @@ public class MapaUbicacion extends AppCompatActivity implements OnMapReadyCallba
             //Asignamos la posicion del punto
             place1 = new MarkerOptions().position(punto).title(objR.getNombre());
         }
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setTitle(objR.getNombre());
+        }
     }
 
     @Override

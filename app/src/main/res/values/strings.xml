@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppTrip</string>
+    <string name="app_name">SonsoTrip</string>
     <string name="correo">Ingrese un correo</string>
     <string name="contraseña">Ingrese una contraseña</string>
     <string name="usuario">Ingrese un nombre de usuario</string>
