@@ -50,6 +50,7 @@ public class RestaurantesUbicaciones extends AppCompatActivity  implements OnMap
 
         //recorremos la lista de restaurantes para marcar los puntos
         for(int i=0; i<Inicio.lstRestaurantes.size();i++){
+
             LatLng lugar = new LatLng(Double.parseDouble(Inicio.lstRestaurantes.get(i).getLatitud()),Double.parseDouble(Inicio.lstRestaurantes.get(i).getLongitud()));
             place1 = new MarkerOptions().position(lugar)
                     .title(Inicio.lstRestaurantes.get(i).getNombre())
